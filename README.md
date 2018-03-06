@@ -1,4 +1,4 @@
-**Nursing Checklist Manager
+**Nursing Checklist Manager**
 
 Standardization of nursing skills validation and procedural processes across the healthcare continuum helps to lower the risk for medical errors and hospital acquired infections.
 
