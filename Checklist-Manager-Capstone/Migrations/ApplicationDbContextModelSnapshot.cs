@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using NursingChecklistManager.Data;
 using System;
 
-namespace NursingChecklistManager.Data.Migrations
+namespace NursingChecklistManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -187,25 +187,7 @@ namespace NursingChecklistManager.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("NursingChecklistManager.Models.Checklist", b =>
-                {
-                    b.Property<int>("CheckListId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ChecklistLineItemId");
-
-                    b.Property<int>("ChecklistTitleId");
-
-                    b.HasKey("CheckListId");
-
-                    b.HasIndex("ChecklistLineItemId");
-
-                    b.HasIndex("ChecklistTitleId");
-
-                    b.ToTable("Checklist");
-                });
-
-            modelBuilder.Entity("NursingChecklistManager.Models.ChecklistLineItem", b =>
+            modelBuilder.Entity("NursingChecklistManager.Models.ChecklistLineItemModel", b =>
                 {
                     b.Property<int>("ChecklistLineItemId")
                         .ValueGeneratedOnAdd();
@@ -220,32 +202,58 @@ namespace NursingChecklistManager.Data.Migrations
                     b.ToTable("ChecklistLineItem");
                 });
 
-            modelBuilder.Entity("NursingChecklistManager.Models.ChecklistTitle", b =>
+            modelBuilder.Entity("NursingChecklistManager.Models.ChecklistModel", b =>
                 {
-                    b.Property<int>("ChecklistTitleId")
+                    b.Property<int>("CheckListId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Title")
+                    b.Property<int?>("ChecklistLineItemModelChecklistLineItemId");
+
+                    b.Property<string>("ChecklistTitle")
                         .IsRequired();
 
-                    b.HasKey("ChecklistTitleId");
+                    b.HasKey("CheckListId");
 
-                    b.ToTable("ChecklistTitle");
+                    b.HasIndex("ChecklistLineItemModelChecklistLineItemId");
+
+                    b.ToTable("Checklist");
                 });
 
-            modelBuilder.Entity("NursingChecklistManager.Models.UserChecklist", b =>
+            modelBuilder.Entity("NursingChecklistManager.Models.LineItemJoinerModel", b =>
+                {
+                    b.Property<int>("LineItemJoinerId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ChecklistId");
+
+                    b.Property<int>("ChecklistLineItemId");
+
+                    b.HasKey("LineItemJoinerId");
+
+                    b.HasIndex("ChecklistId");
+
+                    b.HasIndex("ChecklistLineItemId");
+
+                    b.ToTable("LineItemJoiner");
+                });
+
+            modelBuilder.Entity("NursingChecklistManager.Models.UserChecklistModel", b =>
                 {
                     b.Property<int>("UserChecklistId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ChecklistId");
+                    b.Property<int?>("ChecklistModelCheckListId");
+
+                    b.Property<int>("LineItemJoinerId");
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("UserChecklistId");
 
-                    b.HasIndex("ChecklistId");
+                    b.HasIndex("ChecklistModelCheckListId");
+
+                    b.HasIndex("LineItemJoinerId");
 
                     b.HasIndex("UserId");
 
@@ -297,24 +305,35 @@ namespace NursingChecklistManager.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NursingChecklistManager.Models.Checklist", b =>
+            modelBuilder.Entity("NursingChecklistManager.Models.ChecklistModel", b =>
                 {
-                    b.HasOne("NursingChecklistManager.Models.ChecklistLineItem", "ChecklistLineItems")
+                    b.HasOne("NursingChecklistManager.Models.ChecklistLineItemModel")
                         .WithMany("Checklists")
-                        .HasForeignKey("ChecklistLineItemId")
+                        .HasForeignKey("ChecklistLineItemModelChecklistLineItemId");
+                });
+
+            modelBuilder.Entity("NursingChecklistManager.Models.LineItemJoinerModel", b =>
+                {
+                    b.HasOne("NursingChecklistManager.Models.ChecklistModel", "Checklists")
+                        .WithMany()
+                        .HasForeignKey("ChecklistId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NursingChecklistManager.Models.ChecklistTitle", "ChecklistTitle")
+                    b.HasOne("NursingChecklistManager.Models.ChecklistLineItemModel", "ChecklistLineItems")
                         .WithMany()
-                        .HasForeignKey("ChecklistTitleId")
+                        .HasForeignKey("ChecklistLineItemId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NursingChecklistManager.Models.UserChecklist", b =>
+            modelBuilder.Entity("NursingChecklistManager.Models.UserChecklistModel", b =>
                 {
-                    b.HasOne("NursingChecklistManager.Models.Checklist", "Checklists")
+                    b.HasOne("NursingChecklistManager.Models.ChecklistModel")
                         .WithMany("UserChecklists")
-                        .HasForeignKey("ChecklistId")
+                        .HasForeignKey("ChecklistModelCheckListId");
+
+                    b.HasOne("NursingChecklistManager.Models.LineItemJoinerModel", "Checklists")
+                        .WithMany()
+                        .HasForeignKey("LineItemJoinerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NursingChecklistManager.Models.ApplicationUser", "User")

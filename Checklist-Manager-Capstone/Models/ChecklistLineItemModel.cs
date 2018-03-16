@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NursingChecklistManager.Models
 {
-    public class ChecklistLineItem
+    public class ChecklistLineItemModel
     {
         [Key]
         public int ChecklistLineItemId { get; set; }
@@ -17,7 +17,7 @@ namespace NursingChecklistManager.Models
         [Required]
         public bool Completed { get; set;}
 
-        public virtual ICollection<Checklist> Checklists { get; set; }
+        public virtual ICollection<ChecklistModel> Checklists { get; set; }
 
     }
 }

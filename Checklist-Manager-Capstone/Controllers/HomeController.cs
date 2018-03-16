@@ -15,6 +15,11 @@ namespace NursingChecklistManager.Controllers
             return View();
         }
 
+        public IActionResult ChecklistTitles()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

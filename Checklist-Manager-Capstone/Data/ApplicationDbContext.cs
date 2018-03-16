@@ -16,10 +16,10 @@ namespace NursingChecklistManager.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public DbSet<ChecklistLineItem> ChecklistLineItem { get; set; }
-        public DbSet<ChecklistTitle> ChecklistTitle { get; set; }
-        public DbSet<Checklist> Checklist { get; set; }
-        public DbSet<UserChecklist> UserChecklists { get; set; }
+        public DbSet<ChecklistLineItemModel> ChecklistLineItem { get; set; }
+        public DbSet<ChecklistModel> Checklist { get; set; }
+        public DbSet<UserChecklistModel> UserChecklists { get; set; }
+        public DbSet<LineItemJoinerModel> LineItemJoiner { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

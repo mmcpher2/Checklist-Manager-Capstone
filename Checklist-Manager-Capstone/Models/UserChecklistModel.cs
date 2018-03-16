@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NursingChecklistManager.Models
 {
-    public class UserChecklist
+    public class UserChecklistModel
     {
         [Key]
         public int UserChecklistId { get; set; }
@@ -15,7 +15,7 @@ namespace NursingChecklistManager.Models
         public ApplicationUser User { get; set; }
 
         [Required]
-        public int ChecklistId { get; set; }
-        public Checklist Checklists { get; set; }
+        public int LineItemJoinerId { get; set; }
+        public LineItemJoinerModel Checklists { get; set; }
     }
 }

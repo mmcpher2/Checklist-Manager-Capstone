@@ -10,22 +10,22 @@ using NursingChecklistManager.Models;
 
 namespace NursingChecklistManager.Controllers
 {
-    public class ChecklistTitlesController : Controller
+    public class ChecklistModelsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ChecklistTitlesController(ApplicationDbContext context)
+        public ChecklistModelsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: ChecklistTitles
+        // GET: ChecklistModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ChecklistTitle.ToListAsync());
+            return View(await _context.Checklist.ToListAsync());
         }
 
-        // GET: ChecklistTitles/Details/5
+        // GET: ChecklistModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace NursingChecklistManager.Controllers
                 return NotFound();
             }
 
-            var checklistTitle = await _context.ChecklistTitle
-                .SingleOrDefaultAsync(m => m.ChecklistTitleId == id);
-            if (checklistTitle == null)
+            var checklistModel = await _context.Checklist
+                .SingleOrDefaultAsync(m => m.CheckListId == id);
+            if (checklistModel == null)
             {
                 return NotFound();
             }
 
-            return View(checklistTitle);
+            return View(checklistModel);
         }
 
-        // GET: ChecklistTitles/Create
+        // GET: ChecklistModels/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ChecklistTitles/Create
+        // POST: ChecklistModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ChecklistTitleId,Title")] ChecklistTitle checklistTitle)
+        public async Task<IActionResult> Create([Bind("CheckListId,ChecklistTitle")] ChecklistModel checklistModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(checklistTitle);
+                _context.Add(checklistModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(checklistTitle);
+            return View(checklistModel);
         }
 
-        // GET: ChecklistTitles/Edit/5
+        // GET: ChecklistModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace NursingChecklistManager.Controllers
                 return NotFound();
             }
 
-            var checklistTitle = await _context.ChecklistTitle.SingleOrDefaultAsync(m => m.ChecklistTitleId == id);
-            if (checklistTitle == null)
+            var checklistModel = await _context.Checklist.SingleOrDefaultAsync(m => m.CheckListId == id);
+            if (checklistModel == null)
             {
                 return NotFound();
             }
-            return View(checklistTitle);
+            return View(checklistModel);
         }
 
-        // POST: ChecklistTitles/Edit/5
+        // POST: ChecklistModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ChecklistTitleId,Title")] ChecklistTitle checklistTitle)
+        public async Task<IActionResult> Edit(int id, [Bind("CheckListId,ChecklistTitle")] ChecklistModel checklistModel)
         {
-            if (id != checklistTitle.ChecklistTitleId)
+            if (id != checklistModel.CheckListId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace NursingChecklistManager.Controllers
             {
                 try
                 {
-                    _context.Update(checklistTitle);
+                    _context.Update(checklistModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChecklistTitleExists(checklistTitle.ChecklistTitleId))
+                    if (!ChecklistModelExists(checklistModel.CheckListId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace NursingChecklistManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(checklistTitle);
+            return View(checklistModel);
         }
 
-        // GET: ChecklistTitles/Delete/5
+        // GET: ChecklistModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace NursingChecklistManager.Controllers
                 return NotFound();
             }
 
-            var checklistTitle = await _context.ChecklistTitle
-                .SingleOrDefaultAsync(m => m.ChecklistTitleId == id);
-            if (checklistTitle == null)
+            var checklistModel = await _context.Checklist
+                .SingleOrDefaultAsync(m => m.CheckListId == id);
+            if (checklistModel == null)
             {
                 return NotFound();
             }
 
-            return View(checklistTitle);
+            return View(checklistModel);
         }
 
-        // POST: ChecklistTitles/Delete/5
+        // POST: ChecklistModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var checklistTitle = await _context.ChecklistTitle.SingleOrDefaultAsync(m => m.ChecklistTitleId == id);
-            _context.ChecklistTitle.Remove(checklistTitle);
+            var checklistModel = await _context.Checklist.SingleOrDefaultAsync(m => m.CheckListId == id);
+            _context.Checklist.Remove(checklistModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ChecklistTitleExists(int id)
+        private bool ChecklistModelExists(int id)
         {
-            return _context.ChecklistTitle.Any(e => e.ChecklistTitleId == id);
+            return _context.Checklist.Any(e => e.CheckListId == id);
         }
     }
 }
