@@ -12,16 +12,19 @@
                 <span asp-validation-for="@Model.Title" class="text-danger"></span>
             </div>
             <h4>Steps to complete procedure:</h4>
-            <div class="form-group">
-                <label asp-for="@Model.LineItem" class="control-label"></label>
-                <input asp-for="@Model.LineItem" class="form-control" />
-                <span asp-validation-for="@Model.LineItem" class="text-danger"></span>
+            <div class="form-group" id="newLineItems">
+                <label asp-for="@Model.ChecklistLineItems[0]" class="control-label"></label>
+                <input asp-for="@Model.ChecklistLineItems[0]" class="form-control" />
+                <span asp-validation-for="@Model.ChecklistLineItems[0]" class="text-danger"></span>
             </div>
-                <input id="addLineItem" type="submit" value="Add New Line Item" class="btn btn-default" />
+
+
             <div class="form-group">
                 <input id="submitNewChecklist" type="submit" value="Submit Checklist" class="btn btn-default" />
             </div>
         </form>
+
+        <input id="addLineItem" type="submit" value="Add New Line Item" class="btn btn-default" />
     </div>
 </div>
 

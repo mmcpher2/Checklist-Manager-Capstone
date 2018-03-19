@@ -17,7 +17,7 @@ namespace NursingChecklistManager.Models.ChecklistViewModels
         [Display(Name = "Add a Step")]
         public string LineItem { get; set; }
 
-        public virtual ICollection<ChecklistLineItemModel> ChecklistLineItems { get; set; }
+        public virtual List<String> ChecklistLineItems { get; set; }
 
     }
 }
