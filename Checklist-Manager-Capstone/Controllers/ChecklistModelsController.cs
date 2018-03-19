@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NursingChecklistManager.Data;
 using NursingChecklistManager.Models;
+using NursingChecklistManager.Models.ChecklistViewModels;
 
 namespace NursingChecklistManager.Controllers
 {
@@ -22,7 +23,7 @@ namespace NursingChecklistManager.Controllers
         // GET: ChecklistModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Checklist.ToListAsync());
+            return View(await _context.UserChecklists.ToListAsync());
         }
 
         // GET: ChecklistModels/Details/5
@@ -54,15 +55,28 @@ namespace NursingChecklistManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CheckListId,ChecklistTitle")] ChecklistModel checklistModel)
+        public async Task<IActionResult> Create(CreateChecklistViewModel CreateChecklistModel)
         {
             if (ModelState.IsValid)
+            
             {
-                _context.Add(checklistModel);
+                ChecklistModel Checklist = new ChecklistModel
+                {
+                    ChecklistTitle = CreateChecklistModel.Title
+                };
+
+                ChecklistLineItemModel LineItem = new ChecklistLineItemModel
+                {
+                    ActionToDo = CreateChecklistModel.LineItem
+                };
+
+                _context.Add(Checklist);
+                _context.Add(LineItem);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
-            return View(checklistModel);
+            return View(CreateChecklistModel);
         }
 
         // GET: ChecklistModels/Edit/5
