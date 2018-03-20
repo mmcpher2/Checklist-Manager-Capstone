@@ -323,7 +323,7 @@ namespace NursingChecklistManager.Migrations
                     b.HasOne("NursingChecklistManager.Models.ChecklistLineItemModel", "ChecklistLineItems")
                         .WithMany()
                         .HasForeignKey("ChecklistLineItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NursingChecklistManager.Models.UserChecklistModel", b =>
