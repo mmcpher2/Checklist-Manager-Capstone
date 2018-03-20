@@ -57,7 +57,7 @@ namespace NursingChecklistManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateChecklistViewModel CreateChecklistModel)
         {
-            if (ModelState.IsValid)
+            if (CreateChecklistModel.ChecklistLineItems.Count > 0)
             
             {
                 ChecklistModel Checklist = new ChecklistModel
@@ -65,14 +65,15 @@ namespace NursingChecklistManager.Controllers
                     ChecklistTitle = CreateChecklistModel.Title
                 };
 
-                ChecklistLineItemModel LineItem = new ChecklistLineItemModel
-                {
-                    ActionToDo = CreateChecklistModel.LineItem
-                };
-
+                foreach(string ActionToDo in CreateChecklistModel.ChecklistLineItems){
+                    ChecklistLineItemModel LineItem = new ChecklistLineItemModel
+                    {
+                        ActionToDo = ActionToDo
+                    };
+                    _context.Add(LineItem);
+                }
                 _context.Add(Checklist);
-                _context.Add(LineItem);
-
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }

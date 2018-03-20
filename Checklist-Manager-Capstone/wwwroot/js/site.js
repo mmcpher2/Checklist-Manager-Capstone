@@ -16,3 +16,7 @@ $("#addLineItem").on("click", evt => {
 
     counter += 1
 })
+
+$("#submitNewChecklist").on("click", evt => {
+    console.log("Submit is working")
+})
