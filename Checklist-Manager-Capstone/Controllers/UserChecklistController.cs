@@ -25,7 +25,7 @@ namespace NursingChecklistManager.Controllers
         {
 
             var applicationDbContext = _context.UserChecklists.Include(u => u.Checklists).ThenInclude(o => o.Checklists);
-            
+
             NCMDashboardViewModel NCMDashboard = new NCMDashboardViewModel
             {
                 UserChecklists = await applicationDbContext.ToListAsync()

@@ -18,7 +18,7 @@
 @foreach (var item in Model.UserChecklists) {
         <tr>
             <td>
-                <a>
+                <a asp-controller="ChecklistModels" asp-action="Edit" asp-route-id="@item.Checklists.Checklists.CheckListId">
                     @Html.DisplayFor(modelItem => item.Checklists.Checklists.ChecklistTitle)
                 </a>
             </td>

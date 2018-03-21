@@ -104,6 +104,7 @@ namespace NursingChecklistManager.Controllers
         // GET: ChecklistModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -122,23 +123,23 @@ namespace NursingChecklistManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CheckListId,ChecklistTitle")] ChecklistModel checklistModel)
+        public async Task<IActionResult> Edit(int id, UpdateChecklistViewModel UpdateChecklistViewModel)
         {
-            if (id != checklistModel.CheckListId)
+            if (UpdateChecklistViewModel.Title == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (UpdateChecklistViewModel != null)
             {
                 try
                 {
-                    _context.Update(checklistModel);
+                    _context.Update(UpdateChecklistViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChecklistModelExists(checklistModel.CheckListId))
+                    if (!ChecklistViewModelExists)
                     {
                         return NotFound();
                     }
@@ -149,7 +150,7 @@ namespace NursingChecklistManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(checklistModel);
+            return View(checklistViewModel);
         }
 
         // GET: ChecklistModels/Delete/5
