@@ -96,7 +96,7 @@ namespace NursingChecklistManager.Controllers
                 
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "UserChecklist");
             }
             return View(CreateChecklistModel);
         }
