@@ -24,7 +24,11 @@ namespace NursingChecklistManager.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.UserChecklists.Include(u => u.Checklists);
-            return View(await applicationDbContext.ToListAsync());
+            NCMDashboardViewModel NCMDashboard = new NCMDashboardViewModel
+            {
+                UserChecklists = await applicationDbContext.ToListAsync()
+            };
+            return View(NCMDashboard);
         }
 
         // GET: UserChecklistModels/Details/5

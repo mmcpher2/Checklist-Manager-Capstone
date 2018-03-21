@@ -1,0 +1,28 @@
+﻿@model NursingChecklistManager.Models.ChecklistViewModels.NCMDashboardViewModel
+
+@{
+    ViewData["Title"] = "Incomplete Checklists";
+}
+
+<h2>Your Incomplete Cecklists</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                To Do:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.UserChecklists) {
+        <tr>
+            <td>
+                <a>
+                    @Html.DisplayFor(modelItem => item.UserChecklistId)
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

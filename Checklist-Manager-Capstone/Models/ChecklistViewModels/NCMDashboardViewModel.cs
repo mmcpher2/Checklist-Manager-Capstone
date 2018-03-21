@@ -7,7 +7,6 @@ namespace NursingChecklistManager.Models.ChecklistViewModels
 {
     public class NCMDashboardViewModel
     {
-        public string Title { get; set; }
-        
+        public ICollection<UserChecklistModel> UserChecklists { get; set; }
     }
 }
