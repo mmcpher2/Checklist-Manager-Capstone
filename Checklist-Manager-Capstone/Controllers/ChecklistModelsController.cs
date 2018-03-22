@@ -139,18 +139,11 @@ namespace NursingChecklistManager.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChecklistViewModelExists)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(checklistViewModel);
+            return View("Index", "UserChecklist");
         }
 
         // GET: ChecklistModels/Delete/5

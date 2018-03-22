@@ -16,13 +16,19 @@
     </thead>
     <tbody>
 @foreach (var item in Model.UserChecklists) {
-        <tr>
-            <td>
-                <a asp-controller="ChecklistModels" asp-action="Edit" asp-route-id="@item.Checklists.Checklists.CheckListId">
-                    @Html.DisplayFor(modelItem => item.Checklists.Checklists.ChecklistTitle)
-                </a>
-            </td>
-        </tr>
+    var currentTitle = item.Checklists.Checklists.ChecklistTitle;
+    var previousTitle = "";
+    if ( currentTitle == previousTitle)
+    { }
+    else { 
+    <tr>
+        <td>
+            <a asp-controller="ChecklistModels" asp-action="Edit" asp-route-id="@item.Checklists.Checklists.CheckListId">
+             @Html.DisplayFor(modelItem => item.Checklists.Checklists.ChecklistTitle)
+            </a>
+        </td>
+    </tr>
+    }
 }
     </tbody>
 </table>
