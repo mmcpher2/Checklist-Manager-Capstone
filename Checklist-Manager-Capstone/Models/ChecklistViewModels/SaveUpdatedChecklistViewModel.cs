@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace NursingChecklistManager.Models.ChecklistViewModels
 {
-    public class UpdateChecklistViewModel
+    public class SaveUpdatedChecklistViewModel
     {
+        public List<ChecklistLineItemModel> ChecklistLineItems { get; set; }
 
-        public string Title { get; set; }
-
-        public List<LineItemJoinerModel> LineItemJoiners { get; set; }
-        
     }
 }

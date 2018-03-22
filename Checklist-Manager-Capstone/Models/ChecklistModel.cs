@@ -14,6 +14,6 @@ namespace NursingChecklistManager.Models
         [Required]
         public string ChecklistTitle { get; set; }
 
-        public virtual ICollection<UserChecklistModel> UserChecklists { get; set; }
+        public virtual ICollection<LineItemJoinerModel> LineItems { get; set; }
     }
 }

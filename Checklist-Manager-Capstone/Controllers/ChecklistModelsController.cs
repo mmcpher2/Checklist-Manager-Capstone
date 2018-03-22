@@ -110,12 +110,12 @@ namespace NursingChecklistManager.Controllers
                 return NotFound();
             }
 
-            var checklistModel = await _context.Checklist.Include(c => c.UserChecklists).ThenInclude(i => i.Checklists).SingleOrDefaultAsync(m => m.CheckListId == id);
+            var checklistModel = await _context.Checklist.Include(c => c.LineItems).ThenInclude(i => i.ChecklistLineItems).SingleOrDefaultAsync(m => m.CheckListId == id);
 
             UpdateChecklistViewModel updateChecklist = new UpdateChecklistViewModel
             {
                 Title = checklistModel.ChecklistTitle,
-                UserChecklists = checklistModel.UserChecklists
+                LineItemJoiners = checklistModel.LineItems.ToList()
             };
 
             if (checklistModel == null)
@@ -130,24 +130,21 @@ namespace NursingChecklistManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UpdateChecklistViewModel UpdateChecklistViewModel)
+        public async Task<IActionResult> Edit(int? id, SaveUpdatedChecklistViewModel ChecklistToSave)
         {
-            if (UpdateChecklistViewModel.Title == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (UpdateChecklistViewModel.Title != null)
+            foreach (var Completed in ChecklistToSave.ChecklistLineItems)
             {
-                try
-                {
-                    _context.Update(UpdateChecklistViewModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    
-                }
+                _context.Update(Completed);
+                _context.SaveChanges();
+            }
+                if (id != null)
+            {
+               
                 return RedirectToAction("Index", "UserChecklist");
             }
             return View("Index", "UserChecklist");
