@@ -15,20 +15,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.UserChecklists) {
-    var currentTitle = item.Checklists.Checklists.ChecklistTitle;
-    var previousTitle = "";
-    if ( currentTitle == previousTitle)
-    { }
-    else { 
-    <tr>
-        <td>
-            <a asp-controller="ChecklistModels" asp-action="Edit" asp-route-id="@item.Checklists.Checklists.CheckListId">
-             @Html.DisplayFor(modelItem => item.Checklists.Checklists.ChecklistTitle)
-            </a>
-        </td>
-    </tr>
-    }
-}
+
+        @{int currentChecklistFK = 0;}
+        @{int previousChecklistFK = 0;}
+
+        @foreach (var item in Model.UserChecklists)
+        {
+            if (currentChecklistFK == 0)
+            {
+                currentChecklistFK = item.UserChecklistId;
+            }
+
+            if (currentChecklistFK != previousChecklistFK)
+            {
+                previousChecklistFK = item.UserChecklistId;
+
+            <tr>
+                <td>
+                    <a asp-controller="ChecklistModels" asp-action="Edit" asp-route-id="@item.Checklists.Checklists.CheckListId">
+                        @Html.DisplayFor(modelItem => item.Checklists.Checklists.ChecklistTitle)
+                    </a>
+                </td>
+            </tr>
+            }
+            currentChecklistFK = item.UserChecklistId;
+        }
     </tbody>
 </table>

@@ -10,7 +10,7 @@ namespace NursingChecklistManager.Models.ChecklistViewModels
 
         public string Title { get; set; }
 
-        public ICollection<ChecklistLineItemModel> ChecklistLineItem { get; set; }
+        public ICollection<UserChecklistModel> UserChecklists { get; set; }
         
     }
 }

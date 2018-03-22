@@ -110,12 +110,19 @@ namespace NursingChecklistManager.Controllers
                 return NotFound();
             }
 
-            var checklistModel = await _context.Checklist.SingleOrDefaultAsync(m => m.CheckListId == id);
+            var checklistModel = await _context.Checklist.Include(c => c.UserChecklists).ThenInclude(i => i.Checklists).SingleOrDefaultAsync(m => m.CheckListId == id);
+
+            UpdateChecklistViewModel updateChecklist = new UpdateChecklistViewModel
+            {
+                Title = checklistModel.ChecklistTitle,
+                UserChecklists = checklistModel.UserChecklists
+            };
+
             if (checklistModel == null)
             {
                 return NotFound();
             }
-            return View(checklistModel);
+            return View(updateChecklist);
         }
 
         // POST: ChecklistModels/Edit/5
@@ -130,7 +137,7 @@ namespace NursingChecklistManager.Controllers
                 return NotFound();
             }
 
-            if (UpdateChecklistViewModel != null)
+            if (UpdateChecklistViewModel.Title != null)
             {
                 try
                 {
@@ -141,7 +148,7 @@ namespace NursingChecklistManager.Controllers
                 {
                     
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "UserChecklist");
             }
             return View("Index", "UserChecklist");
         }

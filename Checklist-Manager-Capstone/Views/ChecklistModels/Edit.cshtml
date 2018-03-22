@@ -4,30 +4,29 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
-
-<h4>UpdateChecklistViewModel</h4>
+<h4>Complete Your Checklist</h4>
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                Figure out how to put the title here...
-            </th>
-        </tr>
+        @foreach (var item in Model.Title)
+        {
+            @Html.DisplayFor(modelItem => item)
+
+        }
     </thead>
     <tbody>
-        @foreach (var item in Model.ChecklistLineItem)
+        @foreach (var item in Model.UserChecklists)
         {
         <tr>
             <td>
-                    @Html.DisplayFor(modelItem => item.ActionToDo)
+                
+                @Html.DisplayFor(modelItem => item.Checklists.ChecklistLineItems.ActionToDo)
+                
             </td>
         </tr>
         }
     </tbody>
 </table>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
